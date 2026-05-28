@@ -8,18 +8,18 @@
 
 PCNE (Protein Contact Network Explorer) is an interactive web-based tool for 
 constructing, visualising, and analysing Protein Contact Networks derived from 
-PDB structure files. It supports three node representation modes — Cα, Cβ, and 
-Side-chain Centroid — with automated graph density validation, and computes key 
+PDB structure files. It supports three node representation modes which are  Cα, Cβ, and 
+Side-chain Centroid and computes key 
 topological metrics including node degree, clustering coefficient, and betweenness 
 centrality with z-score based classification of residues into Peripheral, Structural 
 Hub, Bottleneck, and Global Critical Hub categories. Community detection is 
 implemented via the Leiden algorithm with per-community DSSP secondary structure 
-composition reporting. Visualisation includes an interactive 2D contact network, 
+composition reporting. Visualisations include an interactive 2D contact network, 
 adjacency and distance heatmaps, and an embedded 3D NGL Viewer with a toggle 
 between betweenness centrality gradient and community membership colouring. 
 Networks can be exported in SIF format for downstream Cytoscape integration.
 
-🔗 **Live Application:** https://pcn-explorern92ftszddcfpxoncvue9gc.streamlit.app
+🔗 **Live Application:** https://lactdr5rfibhg9m5tmamwg.streamlit.app/
 
 ---
 
@@ -90,11 +90,10 @@ Networks can be exported in SIF format for downstream Cytoscape integration.
 
 - **Network Construction** — accepts PDB files from X-ray crystallography and 
 NMR ensembles with three node representation modes: Cα, Cβ, and Side-chain 
-Centroid, each with calibrated default cutoffs and real-time graph density 
-validation
+Centroid, each with calibrated default cutoffs.
 - **Topological Metrics** — computes node degree, local clustering coefficient, 
 Wasserman-Faust normalised closeness centrality, and betweenness centrality with 
-z-score based classification into four functional residue categories
+z-score based classification into four functional residue categories.
 - **Community Detection** — Leiden algorithm with modularity Q reporting and 
 per-community DSSP secondary structure composition breakdown
 - **3D Visualisation** — embedded NGL Viewer with toggle between betweenness 
@@ -234,18 +233,17 @@ streamlit run app.py
 ```
 
 ### Requirements
-streamlit
-biopython
-networkx
-numpy
-scipy
-pandas
-plotly
-leidenalg
-igraph
-scikit-learn
-pillow
-
+* `streamlit`
+* `biopython`
+* `networkx`
+* `numpy`
+* `scipy`
+* `pandas`
+* `plotly`
+* `leidenalg`
+* `igraph`
+* `scikit-learn`
+* `pillow`
 ---
 
 ## Usage

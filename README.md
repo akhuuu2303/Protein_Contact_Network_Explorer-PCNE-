@@ -71,7 +71,7 @@ Networks can be exported in SIF format for downstream Cytoscape integration.
     composition</b></td>
   </tr>
   <tr>
-    <td><img src="screenshots/ngl_betweenness.png" width="400" 
+    <td><img src="screenshots/ngl_betweeness.png" width="400" 
     alt="NGL Viewer Betweenness"/></td>
     <td><img src="screenshots/ngl_community.png" width="400" 
     alt="NGL Viewer Community"/></td>
@@ -207,7 +207,7 @@ $$c_i^{\text{norm}} = \frac{\log(1 + BC_i) - \log(1 + BC_{\min})}
 
 <table>
   <tr>
-    <td><img src="screenshots/ngl_betweenness.png" width="350" 
+    <td><img src="screenshots/ngl_betweeness.png" width="350" 
     alt="NGL betweenness"/></td>
     <td><img src="screenshots/ngl_community.png" width="350" 
     alt="NGL community"/></td>

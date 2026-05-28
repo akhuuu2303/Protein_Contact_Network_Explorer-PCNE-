@@ -226,8 +226,8 @@ colouring.*
 ## Installation
 
 ```bash
-git clone https://github.com/yourrepo/pcne
-cd pcne
+git clone https://github.com/akhuuu2303/Protein_Contact_Network_Explorer-PCNE-
+cd Protein_Contact_Network_Explorer-PCNE-
 pip install -r requirements.txt
 streamlit run app.py
 ```

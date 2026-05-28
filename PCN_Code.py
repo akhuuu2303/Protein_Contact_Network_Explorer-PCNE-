@@ -342,7 +342,7 @@ def compute_pcn_df(structure, model_id, chain_id, threshold, rep_mode, progress=
         res_name = res.get_resname().strip().upper()
         
         if res.id[0] == ' ' and res_name in standard_aa:
-            # Dynamically fetch coordinates based on user selection
+           
             coord = get_node_coordinate(res, rep_mode)
             
             if coord is not None:
@@ -381,7 +381,7 @@ def render_distance_heatmap(dist_df):
     Renders an interactive, strictly square heatmap for the distance matrix.
     Color Scheme: Fluorescent Red (Close) -> Yellow -> Green -> Cyan -> Blue (Far).
     """
-    # Extract residue numbers for cleaner axes
+    
     try:
         axis_labels = [int(label.split('-')[-1]) for label in dist_df.index]
     except:
@@ -402,7 +402,8 @@ def render_distance_heatmap(dist_df):
         colorbar=dict(
             title='Distance (Å)',
             tickmode='auto', 
-            nticks=6
+            nticks=6,
+            x=0.78
         ),
         hovertemplate=(
             '<b>Residue i:</b> %{y}<br>'
@@ -431,7 +432,7 @@ def render_distance_heatmap(dist_df):
             showgrid=False
         ),
         yaxis=dict(
-            autorange='reversed', # Index 0 at top
+            autorange='reversed', 
             scaleanchor='x',      
             scaleratio=1,
             constrain='domain',
@@ -448,7 +449,7 @@ def render_adjacency_heatmap(adj_df):
     Renders a strictly square binary heatmap for the adjacency matrix.
     Black = Connected, White = Not Connected.
     """
-    # Extract residue numbers
+  
     try:
         axis_labels = [int(label.split('-')[-1]) for label in adj_df.index]
     except:
@@ -589,12 +590,12 @@ def build_3d_figure_enhanced(labels, vis_labels, coords, adj_np, dist_matrix, no
             hoverinfo="none", showlegend=False
         ))
 
-    # Trace C: Path Edges (Req 2: Orange and thinner)
+    
     if path_edge_x:
         traces.append(go.Scatter3d(
             x=path_edge_x, y=path_edge_y, z=path_edge_z,
             mode="lines",
-            # Changed color to orange, reduced width to 4
+           
             line=dict(color='orange', width=4),
             hoverinfo="none", showlegend=False
         ))
@@ -611,7 +612,7 @@ def build_3d_figure_enhanced(labels, vis_labels, coords, adj_np, dist_matrix, no
         )
     )
 
-    # Legend Traces
+   
     if show_legend:
         legend_items = [("Hydrophobic", "#D94E1E"), ("Polar", "#003B6F"), ("Positive", "#007A55"), ("Negative", "#B32630")]
         for name, color in legend_items:
@@ -795,7 +796,7 @@ def render_community_detection_module(structure, model_choice, chain_choice, adj
         st.error(f"PyDSSP Error: {e}")
 
     view_mode = st.radio("Visualisation Mode:", ["Network Graph (Plotly)", "3D Structure (NGL)"], horizontal=True, key="community_view_toggle")
-    palette = pc.qualitative.Alphabet[:20] # Using expanded palette
+    palette = pc.qualitative.Alphabet[:20] 
     
     if view_mode == "Network Graph (Plotly)":
         node_colors = [palette[(c_id - 1) % len(palette)] for c_id in community_labels]
@@ -817,7 +818,7 @@ def render_community_detection_module(structure, model_choice, chain_choice, adj
 
         hover_texts = [f"<b>{labels[i]}</b><br>Cluster {community_labels[i]}<br>DSSP: {ss_labels[i]}" for i in range(N)]
         
-        # CHANGED: Reverted to markers only (no text labels)
+        
         traces.append(go.Scatter3d(
             x=coords[:, 0], y=coords[:, 1], z=coords[:, 2], mode="markers",
             marker=dict(symbol='circle', size=15, color=node_colors, line=dict(width=1, color="white")),
@@ -850,11 +851,11 @@ def render_community_detection_module(structure, model_choice, chain_choice, adj
             if target_c_id is None or c_id == target_c_id:
                 color_map[res_num] = palette[(c_id - 1) % len(palette)]
             else:
-                color_map[res_num] = "#E0E0E0" # Faint grey for unselected
+                color_map[res_num] = "#E0E0E0" 
             
         components.html(generate_ngl_html(pdb_string, color_map, rep_style=rep_map[rep_choice]), height=520)
 
-    # Metrics & Custom Legend (unchanged)
+    
     st.markdown(f"""
     <div style='text-align: center; margin-top: 10px; margin-bottom: 20px;'>
         <span style='font-size: 18px; font-weight: bold; color: #112e51; margin-right: 30px;'>Modularity Score: {mod_score:.4f}</span>
@@ -1007,7 +1008,7 @@ def render_ngl_3d_viewer(pdb_string, metrics, community_dict, residues, labels):
             )
         legend_html += "</div>"
 
-    # 3. HTML & NGL JS Generation
+   
     color_map_json = json.dumps(color_map)
     safe_pdb_string = pdb_string.replace('`', '\\`')
 
@@ -1094,19 +1095,19 @@ def draw_pcn_plot_enhanced(labels, vis_labels, coords, adjacency, dist_matrix, r
         with col_opt2:
             show_legend = st.checkbox("Show Legend Colors", value=True)
 
-    # --- Variables ---
+  
     hub_percentile = 10
     custom_min_degree = 0
     highlight_communities = False
-    centrality_threshold = 0.0 # Default 0
+    centrality_threshold = 0.0 
     exact_degree_match = False
     path_indices = []
     
-    # New variables for Hub Focus feature
+    
     focused_hub_idx = None
     focused_hub_coords = None
 
-    # --- Filter Logic & Input ---
+    
     with filter_col2:
         if view_mode == "Degree Viewer":
             max_deg = int(degrees.max()) if N > 0 else 0
@@ -1118,11 +1119,11 @@ def draw_pcn_plot_enhanced(labels, vis_labels, coords, adjacency, dist_matrix, r
             highlight_communities = st.checkbox("Highlight Communities", value=True)
             
         elif view_mode == "Closeness Centrality":
-            # UPDATED: Calculate and display the Max Closeness for context
+            
             max_val = np.max(metrics['closeness']) if len(metrics['closeness']) > 0 else 0.0
             st.info(f"Max Closeness in this network: **{max_val:.4f}**")
             
-            # Number input for typing precision
+           
             centrality_threshold = st.number_input(
                 "Minimum Closeness Centrality", 
                 min_value=0.000, 
@@ -1155,7 +1156,7 @@ def draw_pcn_plot_enhanced(labels, vis_labels, coords, adjacency, dist_matrix, r
                 except Exception as e:
                     st.error(f"Error: {e}")
 
-    # --- Hub Calculation & Focus Dropdown ---
+   
     raw_threshold = np.percentile(degrees, 100 - hub_percentile)
     degree_threshold_hub = int(raw_threshold) 
     hub_indices_global = np.where(degrees >= degree_threshold_hub)[0]
@@ -1164,24 +1165,24 @@ def draw_pcn_plot_enhanced(labels, vis_labels, coords, adjacency, dist_matrix, r
         if view_mode == "Show Hubs Only":
             st.info(f"Showing top {hub_percentile}% (Degree ≥ {degree_threshold_hub})")
             
-            # --- Streamlit-based Hub Focus Dropdown ---
+           
             if len(hub_indices_global) > 0:
                 st.markdown("---")
                 hub_options = ["None (Overview)"] + [f"{labels[idx]} (Deg: {int(degrees[idx])})" for idx in hub_indices_global]
-                selected_hub_option = st.selectbox("🎯 Focus on specific Hub:", hub_options)
+                selected_hub_option = st.selectbox(" Focus on specific Hub:", hub_options)
                 
                 if selected_hub_option != "None (Overview)":
                     selected_label = selected_hub_option.split(" (Deg:")[0]
                     focused_hub_idx = labels.index(selected_label)
                     focused_hub_coords = coords[focused_hub_idx]
 
-    # --- Coloring & Sizing ---
+  
     final_colors, final_sizes, final_text_labels = [], [], []
 
     for i in range(N):
         is_selected = False
         
-        # 1. Path Mode Logic
+        
         if view_mode == "Shortest Path (Betweenness)":
             if i in path_indices:
                 is_selected = True
@@ -1196,7 +1197,7 @@ def draw_pcn_plot_enhanced(labels, vis_labels, coords, adjacency, dist_matrix, r
             else:
                 is_selected = False
 
-        # 2. Standard Modes Logic
+        
         else:
             if view_mode == "Show All": 
                 is_selected = True
@@ -1332,7 +1333,7 @@ def render_degree_betweenness_scatter(labels, metrics, residues, pdb_string):
             res_name = residues[i].get_resname().strip()
             region = region_map[res_num]
             
-            # FIXED: Looking for the plural strings now!
+            
             if region == "Global Critical": count_global += 1
             elif region == "Structural Hubs": count_hub += 1
             elif region == "Bottlenecks": count_bottleneck += 1
@@ -1351,7 +1352,6 @@ def render_degree_betweenness_scatter(labels, metrics, residues, pdb_string):
         fig.add_vline(x=deg_cutoff, line_width=2, line_dash="dash", line_color="rgba(255, 0, 0, 0.6)", annotation_text=f"Deg={deg_cutoff}", annotation_position="top left", layer="below")
         fig.add_hline(y=log_bet_cutoff, line_width=2, line_dash="dash", line_color="rgba(255, 0, 0, 0.6)", annotation_text=f"Betw={raw_bet_cutoff:.3f}", annotation_position="bottom right", layer="below")
 
-        # UPDATED COLORS: Red, Yellow, Orange, Grey
         fig.add_annotation(xref="paper", yref="paper", x=1, y=1, text=f"<b>Global Critical</b><br>(N={count_global})", showarrow=False, xanchor="right", yanchor="top", font=dict(size=14, color="#d32f2f"), bgcolor="rgba(255, 255, 255, 0.8)", bordercolor="#d32f2f", borderwidth=1)
         fig.add_annotation(xref="paper", yref="paper", x=0, y=1, text=f"<b>Bottlenecks</b><br>(N={count_bottleneck})", showarrow=False, xanchor="left", yanchor="top", font=dict(size=14, color="#fbc02d"), bgcolor="rgba(255, 255, 255, 0.8)", bordercolor="#fbc02d", borderwidth=1)
         fig.add_annotation(xref="paper", yref="paper", x=1, y=0, text=f"<b>Structural Hubs</b><br>(N={count_hub})", showarrow=False, xanchor="right", yanchor="bottom", font=dict(size=14, color="#f57c00"), bgcolor="rgba(255, 255, 255, 0.8)", bordercolor="#f57c00", borderwidth=1)
@@ -1382,12 +1382,12 @@ def render_degree_betweenness_scatter(labels, metrics, residues, pdb_string):
         norm_bc = np.zeros_like(log_bc) if log_max - log_min == 0 else (log_bc - log_min) / (log_max - log_min)
         cmap = cm.get_cmap('coolwarm')
         
-        # UPDATED COLORS: Match the Plotly annotations
+       
         region_colors = {
-            "Global Critical": "#d32f2f", # Red
-            "Structural Hubs": "#f57c00", # Orange
-            "Bottlenecks": "#fbc02d",     # Yellow
-            "Peripheral": "#1A036500"       # Grey
+            "Global Critical": "#d32f2f", 
+            "Structural Hubs": "#f57c00", 
+            "Bottlenecks": "#fbc02d",     
+            "Peripheral": "#1A036500"       
         }
 
         color_map = {}
@@ -1407,7 +1407,7 @@ def render_degree_betweenness_scatter(labels, metrics, residues, pdb_string):
         components.html(generate_ngl_html(pdb_string, color_map, rep_style=rep_map[rep_choice]), height=520)
 
 def load_structure_from_upload(uploaded_file, progress=None, progress_label=None):
-    # CRITICAL FIX: Ensure file pointer is at the beginning
+    
     uploaded_file.seek(0)
     
     if progress is not None:
@@ -1492,7 +1492,7 @@ def process_and_render_pcn(structure, pdb_string, rep_mode, threshold, model_cho
         progress_bar.progress(55)
         progress_label.text("55% complete — preparing computation")
     
-    # --- COMPUTATION ---
+   
     adj_df, dist_df, labels, vis_labels, coords, residues, metrics = compute_pcn_df(
         structure, model_choice, chain_choice, threshold, rep_mode,
         progress=progress_bar, 
@@ -1675,11 +1675,11 @@ def process_and_render_pcn(structure, pdb_string, rep_mode, threshold, model_cho
             yaxis_title="Number of residues"
         )
         
-        # Applying high_res_config to the chart as well
+        
         st.plotly_chart(fig_hist, use_container_width=True, config=high_res_config)
     
 
-    # --- FULL STATISTICAL REPORT ---
+   
     st.markdown("---")
     st.markdown("<h3 style='color: #1e3c72; margin-top: 20px;'>Full Statistical Report (Preview)</h3>", unsafe_allow_html=True)
     
@@ -1791,14 +1791,13 @@ with tab_analysis:
         
         rep_mode = st.radio("Node Representation:", ["C-alpha", "C-beta", "Side-chain Centroid"])
         
-        # Dictionary defining your requested defaults
         default_thresholds = {
             "C-alpha": 7.5, 
             "C-beta": 7.0, 
             "Side-chain Centroid": 7.0
         }
         
-        # Binding the representation mode to the key forces the slider to update its default instantly
+      
         threshold = st.number_input(
             "Contact threshold (Å)", 
             min_value=1.0, max_value=20.0, 
@@ -1817,8 +1816,7 @@ with tab_analysis:
         progress_label.text("0% complete — waiting to start")
         with st.spinner("Processing uploaded PDB file..."):
             structure = load_structure_from_upload(uploaded_file, progress_bar, progress_label)
-            
-            # UPDATED: Added rep_mode and threshold here
+           
             process_and_render_pcn(structure, pdb_string, rep_mode, threshold, progress_bar=progress_bar, progress_label=progress_label)
 
     else:
@@ -1853,8 +1851,8 @@ with tab_analysis:
 with tab_help:
     st.markdown("""
     <div style="background: white; padding: 25px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); border-left: 5px solid #1e3c72;">
-        <h3 style="color: #1e3c72; margin-top: 0;">User Guide</h3>
-        <p style="font-size: 16px;">Follow these steps to analyze your protein structures.</p>
+        <h3 style="color: #1e3c72; margin-top: 0;">How to Use PCNE</h3>
+        <p style="font-size: 16px;">Follow these steps to construct, validate, and analyze your protein contact networks.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1862,50 +1860,49 @@ with tab_help:
 
     with col_guide_1:
         st.markdown("""
-        #### 1. Uploading a PDB File
-        Upload a valid `.pdb` file using the sidebar file uploader. The application automatically parses:
-        * Protein chains
-        * NMR models (if present)
-        * Residue coordinates (Cα atoms)
+        #### 1. Load your protein
+        Upload a PDB file using the file uploader, or select a demo protein from the dropdown to try the tool instantly. 
+        * **NMR Structures:** Select the specific model number you wish to analyse.
+        * **Multi-chain Structures:** Select the individual chain of interest.
         
-        *Alternatively, select **Try Demo (1CRN)** to load a reference structure.*
+        *Note: Analysis is executed on a single chain–model combination at a time.*
 
         ---
-        #### 2. Selecting Chain & Model
-        * **Chains:** If multiple chains exist, select exactly one.
-        * **NMR Models:** If multiple models exist, select one for analysis.
-        
-        *Note: Only a single chain–model combination can be analyzed at a time.*
+        #### 2. Choose node representation
+        Select how amino acid residues are represented as network nodes:
+        * **Cα** — Alpha carbon positions only. Computationally fast and standard for backbone topology analyses.
+        * **Cβ** — Beta carbon positions. Captures side-chain orientation tracking.
+        * **Side-chain Centroid** — Mean spatial position of all non-hydrogen side-chain heavy atoms. Most chemically representative.
         """)
 
     with col_guide_2:
         st.markdown("""
-        #### 3. Contact Threshold
-        Defines which residues are interacting.
-        * **Default:** 7.5 Å
-        * **Logic:** Pairs with Cα–Cα distance ≤ threshold = **1**, else **0**.
+        #### 3. Set the contact threshold
+        The threshold ($r_c$ in Å) defines the maximum Euclidean distance between reference coordinates for a network edge to be drawn. 
+        * **Defaults:** Automatically calibrated per node representation selection.
+        * **Logic:** Pairs with distance $\leq$ threshold = **1** (edge present), else **0** (no edge).
 
         ---
-        #### 4. Output Matrices
-        PCN Explorer generates two key matrices available for preview & download:
-        * **Distance Matrix (CSV):** Pairwise Cα distances.
-        * **Adjacency Matrix (CSV):** Binary contact matrix.
+        #### 4. Export results
+        PCNE generates standard structural and graph-theoretic outputs available for downstream research:
+        * **SIF Network Export:** Download as a `.sif` file for instant graph rendering and style mapping inside Cytoscape.
+        * **Matrix Downloads:** Download the raw pairwise Distance Matrix and binary Adjacency Matrix in standard CSV formats.
         """)
 
     st.markdown("---")
     
     st.markdown("""
-    #### 5. Network Visualization & Filters
-    The interactive 3D viewer displays residues as nodes and contacts as edges.
+    #### 5. Explore the network
+    Use the dedicated view filters to inspect diverse topological and biochemical components of your target protein structure.
     
     * **View Filters:**
-        * **Show All:** Standard view of the entire protein.
-        * **Show Hubs Only:** Highlights top connected nodes. Use the **Focus Dropdown** to zoom into specific hubs.
-        * **Closeness Centrality:** Input a precise **minimum value** to filter nodes. The **Max Closeness** is displayed for reference.
-        * **Hydrophobic Core:** Highlights all the Hydrophobic residues in the network.
-        * **Degree Viewer:** Highlights residues based on degree.
-        * **Betweenness Viewer:** Highlights residues based on betweenness centrality.
-    * **Colors:**
+        * **Show All:** Displays the complete network graph.
+        * **Show Hubs Only:** Highlights top connected nodes. Use the focus selection menu to isolate and zoom into specific core structural hubs.
+        * **Closeness Centrality:** Input a minimum threshold value to isolate nodes with high global reachability metrics.
+        * **Hydrophobic Core:** Highlights all hydrophobic residues to isolate packed interior network motifs.
+        * **Degree Viewer:** Highlights individual residues colored continuously by local connectivity profile.
+        * **Betweenness Viewer:** Maps information bottlenecks based on calculated shortest-path traffic properties.
+    * **Biochemical Color Coding:**
         * <span style="color:#D94E1E"><b>● Hydrophobic</b></span>
         * <span style="color:#003B6F"><b>● Polar</b></span>
         * <span style="color:#007A55"><b>● Positive</b></span>
@@ -1915,155 +1912,173 @@ with tab_help:
     st.markdown("---")
     st.markdown("""
     #### 6. Degree–Betweenness Analysis
-    This  scatter plot partitions residues into four functional roles based on user-defined percentile thresholds.
+    This scatter plot partitions all system residues into four distinct functional roles based on your custom percentile cutoffs.
     
-    * **Axes:**
-        * **X-Axis (Degree):** Local connectivity (Number of contacts).
-        * **Y-Axis (Betweenness):** Global importance (Log-transformed raw value).
-    * **Regions:**
-        * **Global Critical (Top-Right):** High degree & high betweenness. Key for both stability and communication.
-        * **Structural Hubs (Bottom-Right):** High degree & low betweenness. Dense local clusters responsible for stability.
-        * **Bottlenecks (Top-Left):** Low degree & high betweenness. Critical bridges connecting different modules.
-        * **Peripheral (Bottom-Left):** Low degree & low betweenness. Surface or flexible regions.
+    * **Analytical Axes:**
+        * **X-Axis (Node Degree):** Measures local connectivity (number of structural contacts).
+        * **Y-Axis (Betweenness Centrality):** Measures global communication importance ($\log_{10}$-transformed raw values).
+    * **Functional Network Regions:**
+        * **Global Critical (Top-Right):** High degree & high betweenness. Key residues essential for both local packing stability and long-range allosteric communication.
+        * **Structural Hubs (Bottom-Right):** High degree & low betweenness. Densely packed interior clusters responsible for structural stability.
+        * **Bottlenecks (Top-Left):** Low degree & high betweenness. Critical dynamic bridges connecting distinct modules or domains.
+        * **Peripheral (Bottom-Left):** Low degree & low betweenness. Highly flexible or solvent-exposed surface regions.
     """)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("### Troubleshooting & Common Errors")
+    st.markdown("### Common Errors and Fixes")
 
-    with st.expander("Error: No Cα atoms found"):
+    with st.expander("Network is disconnected", expanded=False):
         st.markdown("""
-        **Possible Causes:**
-        - Missing or incomplete residues in the PDB file.
-        - Non-standard residue naming.
-        - The chain contains only heteroatoms (DNA, RNA, Ligands).
-
-        **Solution:**
-        - Verify that the selected chain contains standard amino acids with valid Cα atoms.
+        **Symptom:**
+        A warning banner appears indicating that the largest connected component contains less than 95% of total system residues.
+        
+        **Fix:**
+        Incrementally increase the contact threshold ($r_c$) by 0.5–1.0 Å steps using the slider interface to close isolated network gaps until the structural warning banner disappears.
         """)
 
-    with st.expander("Error: Model index out of range"):
+    with st.expander("No structure loaded", expanded=False):
         st.markdown("""
-        **Cause:**
-        - Selected an NMR model number that is not present in the uploaded structure.
-
-        **Solution:**
-        - Choose a model within the available range shown in the selector dropdown.
+        **Symptom:**
+        The coordinates cannot be parsed or errors are thrown during file initialization steps.
+        
+        **Fix:**
+        Ensure your coordinate file strictly matches standard compliance formats for PDB files (`.pdb`). Files structured in mmCIF, PDBx, or alternative file configurations are not currently supported by the input stream.
         """)
 
-    with st.expander("Issue: Blank or empty visualization"):
+    with st.expander("DSSP failed or community composition not showing", expanded=False):
         st.markdown("""
-        **Possible Causes:**
-        - No residues were parsed.
-        - Contact threshold is set too low (resulting in 0 edges).
-        - Selected chain contains missing coordinates.
-
-        **Solution:**
-        - Increase the contact threshold (e.g., to 8.0 Å).
-        - Recheck chain and model selection.
-        - Verify PDB file integrity.
+        **Symptom:**
+        Community assignments are complete, but secondary structure composition color breakdown bars remain blank.
+        
+        **Fix:**
+        This occurs when local structural validation issues prevent the secondary structure assignment loops. Verify that your source PDB file contains complete, non-truncated `ATOM` records. Try downloading a clean copy of the coordinates directly from the RCSB Protein Data Bank.
         """)
 
-# --- TAB 3: About ---
+    with st.expander("Glycine residues missing from Cβ or Centroid network", expanded=False):
+        st.markdown("""
+        **Symptom:**
+        Glycine positions do not shift when switching from Cα reference configurations.
+        
+        **Context:**
+        This is expected chemical behavior. Because Glycine has no side-chain heavy atoms beyond its alpha carbon, the script engine automatically applies a fallback routing to its native Cα coordinate reference across both Cβ and Side-chain Centroid network modes.
+        """)
+
+    with st.expander("3D viewer not rendering", expanded=False):
+        st.markdown("""
+        **Symptom:**
+        The embedded HTML WebGL frame area remains white, blank, or frozen.
+        
+        **Fix:**
+        Refresh your current browser session and reload the structure. If the WebGL graphic context hangs repeatedly, ensure hardware acceleration is toggled on inside your browser settings—Google Chrome and Mozilla Firefox are recommended.
+        """)
+
+    st.markdown("---")
+    st.markdown("""
+    #### Contact
+    For technical queries, data issues, or feature requests, contact the corresponding author at **i_arnoldemerson@yahoo.com** or open a formal tracking issue directly on the official source repository at **https://github.com/akhuuu2303**
+    """)
+
 with tab_about:
     st.markdown("""
     <div style="text-align: center; margin-bottom: 30px;">
-        <h2 style="color: #1e3c72; font-weight: 800;">About PCN Explorer</h2>
-        <p style="font-size: 18px; color: #555;">An advanced tool for Protein Contact Network Analysis</p>
+        <h2 style="color: #1e3c72; font-weight: 800;">About PCNE</h2>
+        <p style="font-size: 18px; color: #555;">Protein Contact Network Explorer</p>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #2a5298; box-shadow: 0 2px 4px rgba(0,0,0,0.08); margin-bottom: 20px;">
-        <h4 style="margin-top: 0; color: #1e3c72;">Overview</h4>
-        <p>
-            <b>Protein Contact Networks (PCNs)</b> represent amino acid residues as nodes and residue–residue contacts as edges, 
-            providing a graph-theoretic abstraction of protein tertiary structure.
+    <div style="background: white; padding: 22px; border-radius: 10px; border-left: 5px solid #1e3c72; box-shadow: 0 2px 4px rgba(0,0,0,0.08); margin-bottom: 25px;">
+        <h4 style="margin-top: 0; color: #1e3c72; font-weight: 700;">Institutional Affiliation</h4>
+        <p style="margin-bottom: 0; line-height: 1.6;">
+            PCNE (Protein Contact Network Explorer) was developed at the <b>Bioinformatics Programming Laboratory</b>, 
+            Department of Bioscience, School of Bio Sciences and Technology, <b>Vellore Institute of Technology (VIT)</b>, Vellore, Tamil Nadu, India.
         </p>
-        <p>
-            PCN Explorer constructs these networks using <b>Cα–Cα geometric distances</b> and integrates quantitative 
-            matrix representations with interactive 3D visualizations to facilitate structural and network-based analysis.
+        <p style="margin-top: 10px; margin-bottom: 0; line-height: 1.6;">
+            The tool was engineered to make advanced protein contact network topological analysis universally accessible for both structural biology 
+            research frameworks and bioinformatics pedagogy, effectively mitigating the historical requirement for fragmented workflows across multiple standalone platforms.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    col_feat, col_meth = st.columns(2)
-
-    with col_feat:
+    # --- DEVELOPERS SECTION ---
+    st.markdown("###  Research & Development Team")
+    
+    col_dev1, col_dev2 = st.columns(2)
+    
+    with col_dev1:
         st.markdown("""
-        ### Key Features
-        * **Input Flexibility:** Support for X-ray (.pdb) and multi-model NMR ensembles.
-        * **Hub Focus:** Automatically identify and zoom into highly connected "Hub" residues.
-        * **Degree–Betweenness Scatter:** Identify functional bottlenecks and global hubs with dynamic thresholds.
-        * **Precise Filtering:** Filter networks by absolute Closeness Centrality values.
-        * **Interactive Viz:** 3D Network explorer with zoom, orbit, and community detection.
-        * **Export Data:** Download CSV matrices, regional classification reports, and Cytoscape (SIF) files.
-        * **Graph Metrics:** Degree distribution, clustering coefficients, and centrality.        
-        """)
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; height: 180px;">
+            <h5 style="color: #1e3c72; margin-top: 0; font-weight: 700;">Akhurath Ganapathy</h5>
+            <p style="font-size: 14px; color: #6c757d; margin-bottom: 15px;">Researcher & Developer<br>Vellore Institute of Technology</p>
+            <a href="https://github.com/akhuuu2303" target="_blank" style="text-decoration: none; margin-right: 15px; color: #24292e; font-weight: 600;">💻 GitHub</a>
+            <a href="mailto:akhurath2303@gmail.com" style="text-decoration: none; color: #d93025; font-weight: 600;"> Email</a>
+        </div>
+        """, unsafe_allow_html=True)
 
-    with col_meth:
+    with col_dev2:
         st.markdown("""
-        ### Network Definition
-        1.  **Extraction:** Cα atomic coordinates are extracted for the selected chain.
-        2.  **Distance Calculation:** Pairwise Euclidean distances generate an $N \\times N$ distance matrix.
-        3.  **Adjacency:**
-            $$ A_{ij} = 1 \\text{ if } dist(i, j) \leq threshold $$
-            $$ A_{ij} = 0 \\text{ otherwise } $$
-        """)
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; height: 180px;">
+            <h5 style="color: #1e3c72; margin-top: 0; font-weight: 700;">Sanjana V. Krishnan</h5>
+            <p style="font-size: 14px; color: #6c757d; margin-bottom: 15px;">Researcher<br>Vellore Institute of Technology</p>
+            <br>
+            <a href="mailto:sjana.vijay2024@vitstudent.ac.in" style="text-decoration: none; color: #d93025; font-weight: 600;">✉️ Email</a>
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.markdown("---")
-    
-    st.markdown("### Mathematical Formulations")
+    st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown("""
-    #### 1. Node Degree (Hub Identification)
-    The degree $k_i$ of a residue $i$ is the number of other residues it is in contact with. Residues with a degree in the top percentile (e.g., top 10%) are identified as **Hubs**.
-    
-    $$ k_i = \\sum_{j} A_{ij} $$
-    """)
-    
-    st.markdown("""
-    #### 2. Local Clustering Coefficient
-    Measures the degree to which a residue's neighbors are also connected to each other (local cohesiveness). For a residue $i$ with degree $k_i$:
-    
-    $$ C_i = \\frac{2 e_i}{k_i (k_i - 1)} $$
-    
-    Where $e_i$ is the number of actual edges between the neighbors of residue $i$.
-    """)
-    
-    st.markdown("""
-    #### 3. Closeness Centrality (Normalized)
-    Represents how close a residue is to all other residues. It is calculated using the **Wasserman and Faust** formula to strictly normalize values between 0 and 1, even for disconnected graphs.
-    
-    $$ C_{close}(i) = \\frac{n - 1}{\\sum_{j \\neq i} d(i, j)} \\cdot \\frac{n - 1}{N - 1} $$
-    
-    Where $d(i, j)$ is the shortest path distance, $n$ is the number of reachable nodes, and $N$ is the total nodes.
-    """)
-    
-    st.markdown("""
-    #### 4. Betweenness Centrality
-    Quantifies the influence of a residue on the flow of information through the network. It is defined as the fraction of all shortest paths $\\sigma_{st}$ between any pair of nodes $(s, t)$ that pass through node $i$.
-    
-    $$ C_{between}(i) = \\sum_{s \\neq i \\neq t} \\frac{\\sigma_{st}(i)}{\\sigma_{st}} $$
-    """)
+    <div style="background: #f4f7f6; padding: 20px; border-radius: 8px; border-left: 5px solid #007A55;">
+        <h5 style="color: #007A55; margin-top: 0; font-weight: 700;">Professor Arnold Emerson Isaac</h5>
+        <p style="font-size: 14px; color: #495057; margin-bottom: 10px;">
+            <b>Corresponding Author</b><br>
+            Bioinformatics Programming Laboratory, SBST<br>
+            Vellore Institute of Technology, Vellore, India
+        </p>
+        <a href="mailto:i_arnoldemerson@yahoo.com" style="text-decoration: none; margin-right: 20px; color: #d93025; font-weight: 600;"> i_arnoldemerson@yahoo.com</a>
+        <a href="https://orcid.org/0000-0003-4212-0927" target="_blank" style="text-decoration: none; color: #A6CE39; font-weight: 600;"> ORCID: 0000-0003-4212-0927</a>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("---")
 
-    st.markdown("### Installation & Usage")
-    st.code("""
-# 1. Clone the repository
-git clone https://github.com/<your-username>/PCN-Explorer
-cd PCN-Explorer
+    # --- PUBLICATION & CITATION ---
+    st.markdown("###  Publication & Citation Reference")
+    st.markdown(
+        "This interactive analytical framework accompanies the following primary research manuscript:\n\n"
+        "> **Protein Contact Network Explorer: Topological Analysis of Protein Structures**\n"
+        "> *Akhurath Ganapathy, Sanjana V. Krishnan, and Arnold Emerson Isaac*\n"
+        "> **Frontiers in Bioinformatics**, 2026 — *Currently under peer review*"
+    )
+    
+    st.markdown("#### **Cite This Tool**")
+    st.markdown(
+        "If you implement the PCNE platform, graph construction logic, or secondary structure profiling subsets within your research "
+        "pipelines, please formally reference and cite the manuscript listed above."
+    )
+    
+    with st.expander(" View BibTeX Format for Reference Citations"):
+        st.code("""@article{ganapathy2026pcne,
+  title   = {Protein Contact Network Explorer: Topological Analysis of Protein Structures},
+  author  = {Ganapathy, Akhurath and Krishnan, Sanjana V. and Isaac, Arnold Emerson},
+  journal = {Frontiers in Bioinformatics},
+  year    = {2026},
+  note    = {Under Review}
+}""", language="bibtex")
 
-# 2. Install dependencies
-pip install -r requirements.txt
+    st.markdown("---")
 
-# 3. Launch the application
-streamlit run Protein_penult.py
-    """, language="bash")
+    # --- ACKNOWLEDGEMENTS ---
+    st.markdown("###  Acknowledgements")
+    st.markdown(
+        "The authors express sincere gratitude to **Vellore Institute of Technology (VIT), Vellore**, for provisioning the essential "
+        "computational infrastructure, database accesses, and laboratory resources necessary to fully execute this research work. "
+        "No explicit financial support or structural grants were received for the primary research, application development, or open publication pipelines of this article."
+    )
 
     st.markdown("""
-    <div style="margin-top: 40px; text-align: center; color: #888; font-size: 14px;">
-        <hr>
-        Developed by <b>Akhurath Ganapathy</b> and <b>Sanjana Vijay Krishnan</b> (2025)
+    <div style="margin-top: 50px; text-align: center; color: #aaas; font-size: 13px; letter-spacing: 0.5px;">
+        <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 15px;">
+        Bioinformatics Programming Laboratory • School of Bio Sciences and Technology • VIT Vellore (2026)
     </div>
     """, unsafe_allow_html=True)

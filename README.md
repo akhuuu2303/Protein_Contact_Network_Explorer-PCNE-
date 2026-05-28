@@ -19,7 +19,7 @@ adjacency and distance heatmaps, and an embedded 3D NGL Viewer with a toggle
 between betweenness centrality gradient and community membership colouring. 
 Networks can be exported in SIF format for downstream Cytoscape integration.
 
-🔗 **Live Application:** https://lactdr5rfibhg9m5tmamwg.streamlit.app/
+ **Live Application:** https://lactdr5rfibhg9m5tmamwg.streamlit.app/
 
 ---
 
@@ -125,10 +125,7 @@ the measured inter-residue distance differs across representations:
   alt="Node representation modes"/>
 </p>
 <p align="center">
-  <em>Figure 1: Node representation modes. Cα uses the alpha carbon, Cβ uses 
-  the beta carbon, and Side-chain Centroid uses the mean position of all 
-  non-hydrogen side-chain heavy atoms. Distance is measured between the 
-  respective reference points of neighbouring residues.</em>
+  <em>Figure 1: Node representation modes. Cα uses the alpha carbon, Cβ uses the beta carbon, and Side-chain Centroid uses the mean position of all non-hydrogen side-chain heavy atoms. Distance is measured between the respective reference points of neighbouring residues.</em>
 </p>
 
 For the Side-chain Centroid mode, the centroid position is computed as:

@@ -1361,7 +1361,7 @@ def render_degree_betweenness_scatter(labels, metrics, residues, pdb_string):
         st.plotly_chart(fig, use_container_width=True, config={'toImageButtonOptions': {'format': 'png', 'height': 1200, 'width': 1600, 'scale': 6}, 'displaylogo': False, 'modeBarButtons': [['toImage']]})
 
         if classification_data:
-            st.download_button(label="📥 Download Regional Classification Report (CSV)", data=pd.DataFrame(classification_data).to_csv(index=False).encode('utf-8'), file_name="degree_betweenness_classification.csv", mime="text/csv")
+            st.download_button(label=" Download Regional Classification Report (CSV)", data=pd.DataFrame(classification_data).to_csv(index=False).encode('utf-8'), file_name="degree_betweenness_classification.csv", mime="text/csv")
             
     else:
         col_ctrl1, col_ctrl2 = st.columns(2)
@@ -1709,7 +1709,7 @@ def process_and_render_pcn(structure, pdb_string, rep_mode, threshold, model_cho
     # CSV Download
     full_csv = full_stats_df.to_csv(index=False).encode('utf-8')
     st.download_button(
-        label="📥 Download Complete Statistics (CSV)",
+        label=" Download Complete Statistics (CSV)",
         data=full_csv,
         file_name="full_residue_statistics.csv",
         mime="text/csv"
@@ -1734,7 +1734,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-tab_analysis, tab_help, tab_about = st.tabs(["🧪 Analysis Tool", "❓ Help Guide", "🔍 About"])
+tab_analysis, tab_help, tab_about = st.tabs(["Analysis Section", "Help Guide", "About Us"])
 
 with tab_analysis:
     left_col, mid_col, right_col = st.columns([2.5, 4, 3.5])
@@ -2001,7 +2001,7 @@ with tab_about:
     """, unsafe_allow_html=True)
 
     # --- DEVELOPERS SECTION ---
-    st.markdown("###  Research & Development Team")
+    st.markdown("### 👥 Research & Development Team")
     
     col_dev1, col_dev2 = st.columns(2)
     
@@ -2009,9 +2009,14 @@ with tab_about:
         st.markdown("""
         <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; height: 180px;">
             <h5 style="color: #1e3c72; margin-top: 0; font-weight: 700;">Akhurath Ganapathy</h5>
-            <p style="font-size: 14px; color: #6c757d; margin-bottom: 15px;">Researcher & Developer<br>Vellore Institute of Technology</p>
-            <a href="https://github.com/akhuuu2303" target="_blank" style="text-decoration: none; margin-right: 15px; color: #24292e; font-weight: 600;">💻 GitHub</a>
-            <a href="mailto:akhurath2303@gmail.com" style="text-decoration: none; color: #d93025; font-weight: 600;"> Email</a>
+            <p style="font-size: 14px; color: #6c757d; margin-bottom: 12px;">Researcher & Developer<br>Vellore Institute of Technology</p>
+            <p style="margin-bottom: 8px; font-size: 14px; display: flex; align-items: center;">
+                <svg height="16" width="16" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 6px;"><path fill="#24292e" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                <a href="https://github.com/akhuuu2303" target="_blank" style="text-decoration: none; color: #24292e; font-weight: 600;">github.com/akhuuu2303</a>
+            </p>
+            <p style="margin-bottom: 0; font-size: 14px;">
+                <a href="mailto:akhurath.ganapathy2024@vitstudent.ac.in" style="text-decoration: none; color: #d93025; font-weight: 600;">Email: akhurath.ganapathy2024@vitstudent.ac.in</a>
+            </p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -2019,9 +2024,14 @@ with tab_about:
         st.markdown("""
         <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; height: 180px;">
             <h5 style="color: #1e3c72; margin-top: 0; font-weight: 700;">Sanjana V. Krishnan</h5>
-            <p style="font-size: 14px; color: #6c757d; margin-bottom: 15px;">Researcher<br>Vellore Institute of Technology</p>
-            <br>
-            <a href="mailto:sjana.vijay2024@vitstudent.ac.in" style="text-decoration: none; color: #d93025; font-weight: 600;">✉️ Email</a>
+            <p style="font-size: 14px; color: #6c757d; margin-bottom: 12px;">Researcher<br>Vellore Institute of Technology</p>
+            <p style="margin-bottom: 8px; font-size: 14px; display: flex; align-items: center;">
+                <svg height="16" width="16" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 6px;"><path fill="#24292e" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                <a href="https://github.com/sanjanav-genetics" target="_blank" style="text-decoration: none; color: #24292e; font-weight: 600;">github.com/sanjanav-genetics</a>
+            </p>
+            <p style="margin-bottom: 0; font-size: 14px;">
+                <a href="mailto:sanjana.vijay2024@vitstudent.ac.in" style="text-decoration: none; color: #d93025; font-weight: 600;">Email: sanjana.vijay2024@vitstudent.ac.in</a>
+            </p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -2031,19 +2041,19 @@ with tab_about:
     <div style="background: #f4f7f6; padding: 20px; border-radius: 8px; border-left: 5px solid #007A55;">
         <h5 style="color: #007A55; margin-top: 0; font-weight: 700;">Professor Arnold Emerson Isaac</h5>
         <p style="font-size: 14px; color: #495057; margin-bottom: 10px;">
-            <b>Corresponding Author</b><br>
-            Bioinformatics Programming Laboratory, SBST<br>
+            <b>Corresponding Author / Principal Investigator</b><br>
+            Bioinformatics Programming Laboratory, Department of Bioscience, SBST<br>
             Vellore Institute of Technology, Vellore, India
         </p>
-        <a href="mailto:i_arnoldemerson@yahoo.com" style="text-decoration: none; margin-right: 20px; color: #d93025; font-weight: 600;"> i_arnoldemerson@yahoo.com</a>
-        <a href="https://orcid.org/0000-0003-4212-0927" target="_blank" style="text-decoration: none; color: #A6CE39; font-weight: 600;"> ORCID: 0000-0003-4212-0927</a>
+        <a href="mailto:i_arnoldemerson@yahoo.com" style="text-decoration: none; margin-right: 20px; color: #d93025; font-weight: 600;">Email: i_arnoldemerson@yahoo.com</a>
+        <a href="https://orcid.org/0000-0003-4212-0927" target="_blank" style="text-decoration: none; color: #A6CE39; font-weight: 600;">ID ORCID: 0000-0003-4212-0927</a>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("---")
 
-    # --- PUBLICATION & CITATION ---
-    st.markdown("###  Publication & Citation Reference")
+   # --- PUBLICATION & CITATION ---
+    st.markdown("### 📄 Publication & Citation Reference")
     st.markdown(
         "This interactive analytical framework accompanies the following primary research manuscript:\n\n"
         "> **Protein Contact Network Explorer: Topological Analysis of Protein Structures**\n"
@@ -2054,11 +2064,10 @@ with tab_about:
     st.markdown("#### **Cite This Tool**")
     st.markdown(
         "If you implement the PCNE platform, graph construction logic, or secondary structure profiling subsets within your research "
-        "pipelines, please formally reference and cite the manuscript listed above."
+        "pipelines, please formally reference and cite the manuscript listed above using the standard format below:"
     )
     
-    with st.expander(" View BibTeX Format for Reference Citations"):
-        st.code("""@article{ganapathy2026pcne,
+    st.code("""@article{ganapathy2026pcne,
   title   = {Protein Contact Network Explorer: Topological Analysis of Protein Structures},
   author  = {Ganapathy, Akhurath and Krishnan, Sanjana V. and Isaac, Arnold Emerson},
   journal = {Frontiers in Bioinformatics},
@@ -2069,7 +2078,7 @@ with tab_about:
     st.markdown("---")
 
     # --- ACKNOWLEDGEMENTS ---
-    st.markdown("###  Acknowledgements")
+    st.markdown("### 🤝 Acknowledgements")
     st.markdown(
         "The authors express sincere gratitude to **Vellore Institute of Technology (VIT), Vellore**, for provisioning the essential "
         "computational infrastructure, database accesses, and laboratory resources necessary to fully execute this research work. "
@@ -2077,7 +2086,7 @@ with tab_about:
     )
 
     st.markdown("""
-    <div style="margin-top: 50px; text-align: center; color: #aaas; font-size: 13px; letter-spacing: 0.5px;">
+    <div style="margin-top: 50px; text-align: center; color: #aaa; font-size: 13px; letter-spacing: 0.5px;">
         <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 15px;">
         Bioinformatics Programming Laboratory • School of Bio Sciences and Technology • VIT Vellore (2026)
     </div>

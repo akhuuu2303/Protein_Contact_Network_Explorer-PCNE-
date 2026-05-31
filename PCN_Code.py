@@ -1974,8 +1974,15 @@ with tab_help:
 
     st.markdown("---")
     st.markdown("""
-    #### Contact
-    For technical queries, data issues, or feature requests, contact the corresponding author at **i_arnoldemerson@yahoo.com** or open a formal tracking issue directly on the official source repository at **https://github.com/akhuuu2303**
+    #### Contact & Support
+    For technical queries, model edge cases, or collaboration inquiries, please reach out to the project team:
+    
+    * **Corresponding Author:** Professor Arnold Emerson Isaac — [iarnoldemerson@vit.ac.in](mailto:iarnoldemerson@vit.ac.in)
+    * **Development & Analytics Support:**
+        * Akhurath Ganapathy — [akhurath.ganapathy2024@vitstudent.ac.in](mailto:akhurath.ganapathy2024@vitstudent.ac.in)
+        * Sanjana V. Krishnan — [sanjana.vijay2024@vitstudent.ac.in](mailto:sanjana.vijay2024@vitstudent.ac.in)
+        
+    Alternatively, you can open a formal optimization ticket directly on the official source repository tracker at **https://github.com/akhuuu2303**
     """)
 
 with tab_about:
@@ -2045,7 +2052,7 @@ with tab_about:
             Bioinformatics Programming Laboratory, Department of Bioscience, SBST<br>
             Vellore Institute of Technology, Vellore, India
         </p>
-        <a href="mailto:i_arnoldemerson@yahoo.com" style="text-decoration: none; margin-right: 20px; color: #d93025; font-weight: 600;">Email: i_arnoldemerson@yahoo.com</a>
+        <a href="mailto:iarnoldemerson@vit.ac.in" style="text-decoration: none; margin-right: 20px; color: #d93025; font-weight: 600;">Email: iarnoldemerson@vit.ac.in</a>
         <a href="https://orcid.org/0000-0003-4212-0927" target="_blank" style="text-decoration: none; color: #A6CE39; font-weight: 600;">ID ORCID: 0000-0003-4212-0927</a>
     </div>
     """, unsafe_allow_html=True)

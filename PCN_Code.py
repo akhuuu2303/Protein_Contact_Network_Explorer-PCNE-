@@ -2008,7 +2008,7 @@ with tab_about:
     """, unsafe_allow_html=True)
 
     # --- DEVELOPERS SECTION ---
-    st.markdown("###Research & Development Team")
+    st.markdown("### Research & Development Team")
     
     col_dev1, col_dev2 = st.columns(2)
     

@@ -2008,7 +2008,7 @@ with tab_about:
     """, unsafe_allow_html=True)
 
     # --- DEVELOPERS SECTION ---
-    st.markdown("### 👥 Research & Development Team")
+    st.markdown("###Research & Development Team")
     
     col_dev1, col_dev2 = st.columns(2)
     
@@ -2060,7 +2060,7 @@ with tab_about:
     st.markdown("---")
 
    # --- PUBLICATION & CITATION ---
-    st.markdown("### 📄 Publication & Citation Reference")
+    st.markdown("### Publication & Citation Reference")
     st.markdown(
         "This interactive analytical framework accompanies the following primary research manuscript:\n\n"
         "> **Protein Contact Network Explorer: Topological Analysis of Protein Structures**\n"
@@ -2078,14 +2078,13 @@ with tab_about:
   title   = {Protein Contact Network Explorer: Topological Analysis of Protein Structures},
   author  = {Ganapathy, Akhurath and Krishnan, Sanjana V. and Isaac, Arnold Emerson},
   journal = {Frontiers in Bioinformatics},
-  year    = {2026},
-  note    = {Under Review}
+  year    = {2026}
 }""", language="bibtex")
 
     st.markdown("---")
 
     # --- ACKNOWLEDGEMENTS ---
-    st.markdown("### 🤝 Acknowledgements")
+    st.markdown("### Acknowledgements")
     st.markdown(
         "The authors express sincere gratitude to **Vellore Institute of Technology (VIT), Vellore**, for provisioning the essential "
         "computational infrastructure, database accesses, and laboratory resources necessary to fully execute this research work. "

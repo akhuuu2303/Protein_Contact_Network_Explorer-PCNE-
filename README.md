@@ -19,7 +19,16 @@ adjacency and distance heatmaps, and an embedded 3D NGL Viewer with a toggle
 between betweenness centrality gradient and community membership colouring. 
 Networks can be exported in SIF format for downstream Cytoscape integration.
 
- **Live Application:** https://lactdr5rfibhg9m5tmamwg.streamlit.app/
+<p align="center">
+  <a href="https://lactdr5rfibhg9m5tmamwg.streamlit.app/">
+    <img src="https://img.shields.io/badge/🚀%20Launch-PCNE-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Launch PCNE">
+  </a>
+</p>
+
+<p align="center">
+<b>Live Application</b><br>
+https://lactdr5rfibhg9m5tmamwg.streamlit.app/
+</p>
 
 ---
 

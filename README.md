@@ -21,7 +21,7 @@ Networks can be exported in SIF format for downstream Cytoscape integration.
 
 <p align="center">
   <a href="https://lactdr5rfibhg9m5tmamwg.streamlit.app/">
-    <img src="https://img.shields.io/badge/🚀%20Launch-PCNE-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Launch PCNE">
+    <img src="https://img.shields.io/badge/%20Launch-PCNE-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Launch PCNE">
   </a>
 </p>
 

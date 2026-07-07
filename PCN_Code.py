@@ -2063,7 +2063,7 @@ with tab_about:
     st.markdown("### Publication & Citation Reference")
     st.markdown(
         "This interactive analytical framework accompanies the following primary research manuscript:\n\n"
-        "> Ganapathy A, Krishnan SV and Isaac AE (2026) **Protein contact network explorer: topological analysis of protein structures**. "
+        "Ganapathy A, Krishnan SV and Isaac AE (2026) **Protein contact network explorer: topological analysis of protein structures**. "
         "*Front. Bioinform.* 6:1870542. doi: [10.3389/fbinf.2026.1870542](https://doi.org/10.3389/fbinf.2026.1870542)"
     )
 

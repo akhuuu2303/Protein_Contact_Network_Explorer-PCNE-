@@ -2084,7 +2084,7 @@ st.code("""@article{ganapathy2026pcne,
   doi     = {10.3389/fbinf.2026.1870542}
 }""", language="bibtex")
 
-    st.markdown("---")
+st.markdown("---")
 
     # --- ACKNOWLEDGEMENTS ---
     st.markdown("### Acknowledgements")

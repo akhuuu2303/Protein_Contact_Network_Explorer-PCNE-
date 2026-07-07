@@ -2059,26 +2059,29 @@ with tab_about:
 
     st.markdown("---")
 
-   # --- PUBLICATION & CITATION ---
-    st.markdown("### Publication & Citation Reference")
-    st.markdown(
-        "This interactive analytical framework accompanies the following primary research manuscript:\n\n"
-        "> **Protein Contact Network Explorer: Topological Analysis of Protein Structures**\n"
-        "> *Akhurath Ganapathy, Sanjana V. Krishnan, and Arnold Emerson Isaac*\n"
-        "> **Frontiers in Bioinformatics**, 2026 — *Currently under peer review*"
-    )
-    
-    st.markdown("#### **Cite This Tool**")
-    st.markdown(
-        "If you implement the PCNE platform, graph construction logic, or secondary structure profiling subsets within your research "
-        "pipelines, please formally reference and cite the manuscript listed above using the standard format below:"
-    )
-    
-    st.code("""@article{ganapathy2026pcne,
-  title   = {Protein Contact Network Explorer: Topological Analysis of Protein Structures},
+  # --- PUBLICATION & CITATION ---
+st.markdown("### Publication & Citation Reference")
+st.markdown(
+    "This interactive analytical framework accompanies the following primary research manuscript:\n\n"
+    "> Ganapathy A, Krishnan SV and Isaac AE (2026) **Protein contact network explorer: topological analysis of protein structures**. "
+    "*Front. Bioinform.* 6:1870542. doi: [10.3389/fbinf.2026.1870542](https://doi.org/10.3389/fbinf.2026.1870542)"
+)
+
+st.markdown("#### **CITATION**")
+st.markdown(
+    "**Please cite the research articles if you utilise our tool.**\n\n"
+    "If you implement the PCNE platform, graph construction logic, or secondary structure profiling subsets within your research "
+    "pipelines, please formally reference and cite the manuscript listed above using the standard format below:"
+)
+
+st.code("""@article{ganapathy2026pcne,
+  title   = {Protein contact network explorer: topological analysis of protein structures},
   author  = {Ganapathy, Akhurath and Krishnan, Sanjana V. and Isaac, Arnold Emerson},
   journal = {Frontiers in Bioinformatics},
-  year    = {2026}
+  volume  = {6},
+  pages   = {1870542},
+  year    = {2026},
+  doi     = {10.3389/fbinf.2026.1870542}
 }""", language="bibtex")
 
     st.markdown("---")

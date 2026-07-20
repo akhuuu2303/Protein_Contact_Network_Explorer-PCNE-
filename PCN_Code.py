@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
+import matplotlib as mpl
 import streamlit.components.v1 as components
 import json
 import plotly.graph_objects as go
@@ -950,7 +951,7 @@ def render_ngl_3d_viewer(pdb_string, metrics, community_dict, residues, labels):
         else:
             norm_bc = (log_bc - log_min) / (log_max - log_min)
             
-        cmap = cm.get_cmap('coolwarm')
+        cmap = mpl.colormaps['coolwarm']
         top_3_indices = np.argsort(bc_values)[-3:][::-1]
         top_3_info = []
         
@@ -1333,7 +1334,6 @@ def render_degree_betweenness_scatter(labels, metrics, residues, pdb_string):
             res_name = residues[i].get_resname().strip()
             region = region_map[res_num]
             
-            
             if region == "Global Critical": count_global += 1
             elif region == "Structural Hubs": count_hub += 1
             elif region == "Bottlenecks": count_bottleneck += 1
@@ -1380,9 +1380,12 @@ def render_degree_betweenness_scatter(labels, metrics, residues, pdb_string):
         log_bc = np.log1p(bc_values)
         log_min, log_max = log_bc.min(), log_bc.max()
         norm_bc = np.zeros_like(log_bc) if log_max - log_min == 0 else (log_bc - log_min) / (log_max - log_min)
-        cmap = cm.get_cmap('coolwarm')
         
-       
+        # --- FIX APPLIED HERE ---
+        import matplotlib as mpl
+        cmap = mpl.colormaps['coolwarm']
+        # ------------------------
+        
         region_colors = {
             "Global Critical": "#d32f2f", 
             "Structural Hubs": "#f57c00", 

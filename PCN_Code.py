@@ -764,9 +764,16 @@ def render_community_detection_module(structure, model_choice, chain_choice, adj
     st.markdown("---")
     st.markdown("### Leiden Community Detection")
 
+    if "leiden_seed" not in st.session_state:
+        st.session_state.leiden_seed = int(np.random.randint(1, 100000))
+
     G = nx.from_numpy_array(adj_np)
     ig_graph = ig.Graph.from_networkx(G)
-    partition = leidenalg.find_partition(ig_graph, leidenalg.ModularityVertexPartition)
+    partition = leidenalg.find_partition(
+        ig_graph, 
+        leidenalg.ModularityVertexPartition, 
+        seed=st.session_state.leiden_seed
+    )
     
     mod_score = partition.modularity
     num_communities = len(partition)
@@ -858,11 +865,33 @@ def render_community_detection_module(structure, model_choice, chain_choice, adj
 
     
     st.markdown(f"""
-    <div style='text-align: center; margin-top: 10px; margin-bottom: 20px;'>
+    <div style='text-align: center; margin-top: 10px; margin-bottom: 15px;'>
         <span style='font-size: 18px; font-weight: bold; color: #112e51; margin-right: 30px;'>Modularity Score: {mod_score:.4f}</span>
         <span style='font-size: 18px; font-weight: bold; color: #112e51;'>Communities Detected: {num_communities}</span>
     </div>
     """, unsafe_allow_html=True)
+
+   
+    seed_col1, seed_col2 = st.columns([2, 1.5])
+    
+    with seed_col1:
+        new_seed = st.number_input(
+            "Leiden Community Seed:",
+            min_value=0,
+            max_value=999999,
+            value=st.session_state.leiden_seed,
+            step=1,
+            help="This seed locks the community partition. Copy it to save, or type a custom seed to reproduce a run."
+        )
+        if new_seed != st.session_state.leiden_seed:
+            st.session_state.leiden_seed = int(new_seed)
+            st.rerun()
+            
+    with seed_col2:
+        st.markdown("<div style='margin-top: 28px;'></div>", unsafe_allow_html=True)
+        if st.button("Generate New Seed", key="random_leiden_seed"):
+            st.session_state.leiden_seed = int(np.random.randint(1, 100000))
+            st.rerun()
 
     if dssp_error: st.warning("Secondary structure could not be calculated. Defaulting to Loops (L).")
 
@@ -921,7 +950,6 @@ def render_community_detection_module(structure, model_choice, chain_choice, adj
     csv_data = [{"Residue Number": residues[i].id[1], "Amino Acid": seq1(residues[i].get_resname().strip()), "Cluster ID": c_id, "Secondary Structure": ss_labels[i]} for i, c_id in enumerate(community_labels)]
     st.markdown("<br>", unsafe_allow_html=True)
     st.download_button("📥 Download Full Cluster Membership (CSV/Excel)", data=pd.DataFrame(csv_data).to_csv(index=False).encode('utf-8'), file_name="cluster_membership.csv", mime="text/csv")
-
 def render_ngl_3d_viewer(pdb_string, metrics, community_dict, residues, labels):
     """
     Renders an interactive 3D protein structure using NGL Viewer embedded via HTML.
